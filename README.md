@@ -25,6 +25,8 @@ Ansible is needed for the automatic configuration process itself
 pip install ansible
 ```
 
+### Git
+
 ### Docker
 
 Add apt repositories
@@ -126,3 +128,7 @@ nvm install v20.17.0
 ```
 
 Make sure to the export from above to be in your .zshrc or .bashrc
+
+#### Tmux
+
+#### 1password

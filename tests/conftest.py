@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 @pytest.fixture
-def container():
+def ssh_container():
     image = DockerContainer(
         image="ssh_test",
     )
@@ -21,4 +21,30 @@ def container():
     _logger.info("Container started")
     yield image
     image.stop()
-    # return image.run()
+
+
+@pytest.fixture
+def ansible_container():
+    image = DockerContainer(
+        image="ansible_test",
+    )
+    # ~/.ssh:/root/.ssh:ro
+    image.volumes = {
+        _TESTS_DIR.parent: {"bind": "/home/ansible/ansible", "mode": "rw"},
+    }
+    image.start()
+    _logger.info("Container started")
+    yield image
+    image.stop()
+
+
+@pytest.fixture
+def plain_container():
+    image = DockerContainer(
+        image="plain_test",
+    )
+    image.volumes = {_TESTS_DIR.parent: {"bind": "/home/ansible/ansible", "mode": "rw"}}
+    image.start()
+    _logger.info("Container started")
+    yield image
+    image.stop()
