@@ -57,7 +57,7 @@ def test_run_playbook(ansible_container: DockerContainer):
         command="apt list --installed",
     )
 
-    _logger.info(result)
+    # _logger.info(result)
 
     assert "python3-venv" in result
     assert "docker-ce" in result

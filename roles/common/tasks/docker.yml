@@ -30,12 +30,16 @@
     state: present
 
 - name: Print architecture variables
-  become: true
-  become_user: "{{ ansible_user_id }}"
   ansible.builtin.debug:
-    msg: "Architecture: {{ ansible_architecture }}, Codename: {{ ansible_lsb.codename }}, HOME {{ ansible_env.HOME }}"
+    msg: "Architecture: {{ ansible_architecture }}, Codename: {{ ansible_lsb.codename }}"
+
+- name: Register status of Docker sources file
+  ansible.builtin.stat:
+    path: /etc/apt/sources.list.d/docker.list
+  register: docker_sources_file
 
 - name: Add Docker repository
+  when: "not docker_sources_file.stat.exists"
   become: true
   ansible.builtin.apt_repository:
     repo: >-
@@ -65,9 +69,8 @@
 
 - name: Add user to Docker group
   become: true
-  #become_user: "{{ ansible_user_id }}"
   ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
+    name: "{{ original_user }}"
     groups: docker
     append: true
 

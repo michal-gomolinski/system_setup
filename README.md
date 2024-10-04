@@ -80,14 +80,26 @@ Installing with apt
 sudo apt-get install zsh
 ```
 
-Warning: The version of Zsh in the official repositories is outdated
+Installing ohmyzsh
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+Warning: The version of Zsh in the official repositories may be outdated
+
+The `.zshrc` file shouldn't be modified, rather pushed and copied from a remote repository.
 
 #### Plugins
 
-- git
-- zsh-autosuggestions
-- zsh-z
-- copilot
+```
+```bash
+# zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH:-~/.oh-my-zsh}/plugins/zsh-autosuggestions
+# zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH:-~/.oh-my-zsh}/plugins/zsh-syntax-highlighting
+# zsh-z
+```
 
 ### Kubectl
 
