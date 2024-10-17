@@ -1,0 +1,16 @@
+- name: Install oh-my-zsh
+  become: true
+  ansible.builtin.package:
+    name:
+      - zsh
+
+- name: Register status of oh-my-zsh-directory
+  ansible.builtin.stat:
+    path: "{{ original_user_home }}/.oh-my-zsh/"
+  register: oh_my_zsh_path
+
+- name: Install oh-my-zsh
+  when: "not oh_my_zsh_path.stat.exists"
+  ansible.builtin.shell: >
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+

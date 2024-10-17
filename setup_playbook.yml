@@ -1,0 +1,33 @@
+- name: Workstation setup
+  hosts: localhost
+  tasks:
+  - set_fact:
+    # We might need to become user for some steps
+    # keep the information of the original user in variables
+      original_user: "{{ ansible_user_id }}"
+      original_user_home: "{{ ansible_env.HOME }}"
+  - name: Install python3-venv
+    become: true
+    ansible.builtin.package:
+      name: python3-venv
+      state: present
+
+  - name: Install docker
+    include_role:
+      name: common
+      tasks_from: docker
+
+  - name: Install zsh
+    include_role:
+      name: common
+      tasks_from: zsh
+
+  - name: Install Node
+    include_role:
+      name: common
+      tasks_from: node
+
+  #- name: Print message
+  #   ansible.builtin.debug:
+  #   msg: Hello world
+
