@@ -4,12 +4,18 @@
   - set_fact:
     # We might need to become user for some steps
     # keep the information of the original user in variables
-      original_user: "{{ ansible_user_id }}"
-      original_user_home: "{{ ansible_env.HOME }}"
+      original_user: "{{ ansible_facts['user_id'] }}"
+      original_user_home: "{{ ansible_facts['env']['HOME'] }}"
   - name: Install python3-venv
     become: true
     ansible.builtin.package:
       name: python3-venv
+      state: present
+  
+  - name: Install python3-debian
+    become: true
+    ansible.builtin.package:
+      name: python3-debian
       state: present
 
   - name: Install docker
@@ -26,8 +32,16 @@
     include_role:
       name: common
       tasks_from: node
+      
+  - name: Install tmux
+    become: true
+    ansible.builtin.unarchive:
+      src: https://github.com/tmux/tmux-builds/releases/download/v3.7b/tmux-3.7b-linux-x86_64.tar.gz
+      dest: /usr/local/bin
+      remote_src: yes
 
-  #- name: Print message
-  #   ansible.builtin.debug:
-  #   msg: Hello world
-
+  - name: Install neovim
+    include_role:
+      name: common
+      tasks_from: neovim
+ 

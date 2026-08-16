@@ -1,0 +1,8 @@
+- name: Install keyring
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - gnome-keyring
+      - secret-tool
+      - seahorse
+      - libsecret-1-0

@@ -1,15 +1,12 @@
 This repository contains opinionated automatic personal setup of a linux machine
 
-## OS Distro: Ubuntu 22.04 (Jammy)
+## OS Distro: Ubuntu 24.04 (Jammy)
 
-- Possible upgrade to Ubuntu 24.04
-- Possible switch to another Linux Distro
-
-## Required tooling
+## Prerequisites
 
 ### Python
 
-Ubuntu 22.04 comes with Python 3.10 installed that may be
+Ubuntu 24.04 comes with Python 3.12 installed that may be
 recent enough, however some packages still need to be installed
 
 ```bash
@@ -17,15 +14,10 @@ sudo apt-get install python3-pip
 sudo apt-get install python3-venv
 ```
 
-### Ansible
-
-Ansible is needed for the automatic configuration process itself
-
-```bash
-pip install ansible
-```
-
 ### Git
+
+
+## Installed packages
 
 ### Docker
 
@@ -142,5 +134,7 @@ nvm install v20.17.0
 Make sure to the export from above to be in your .zshrc or .bashrc
 
 #### Tmux
+
+https://github.com/tmux/tmux/wiki/Installing#installing-tmux
 
 #### 1password
