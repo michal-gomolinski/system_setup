@@ -45,3 +45,7 @@
       name: common
       tasks_from: neovim
  
+  - name: Install keyring
+    include_role:
+      name: common
+      tasks_from: keyring

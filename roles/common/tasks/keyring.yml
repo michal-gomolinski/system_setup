@@ -3,6 +3,18 @@
   ansible.builtin.apt:
     pkg:
       - gnome-keyring
-      - secret-tool
-      - seahorse
+      - libglib2.0-dev
       - libsecret-1-0
+      - libsecret-1-dev
+      - libsecret-tools
+      - seahorse
+
+- name: Build and install libsecret
+  become: true
+  community.general.make:
+    chdir: /usr/share/doc/git/contrib/credential/libsecret
+
+- name: Set up git to use libsecret
+  become: true
+  ansible.builtin.command:
+    cmd: git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
