@@ -1,0 +1,17 @@
+---
+
+- name: Set default versions
+  set_fact:
+    node_version: "v20.17.0"
+    nvm_version: "v0.40.1"
+
+- name: Install nvm
+  ansible.builtin.shell: >
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh | bash
+  args:
+    creates: "{{ ansible_facts['env']['HOME'] }}/.nvm/nvm.sh"
+- name: Install node and set version
+  ansible.builtin.shell: >
+    /bin/bash -c "source {{ ansible_facts['env']['HOME'] }}/.nvm/nvm.sh && nvm install {{ node_version }}"
+  args:
+    creates: "{{ ansible_facts['env']['HOME'] }}/.nvm/versions/node/{{ node_version }}"

@@ -1,0 +1,31 @@
+- name: Install neovim
+  become: true
+  ansible.builtin.unarchive:
+    src: https://github.com/neovim/neovim/releases/download/v0.12.4/nvim-linux-x86_64.tar.gz
+    dest: /opt
+    remote_src: yes
+
+- name: Create symlink for neovim
+  become: true
+  ansible.builtin.file:
+    src: /opt/nvim-linux-x86_64/bin/nvim
+    dest: /usr/bin/nvim
+    state: link
+
+- name: Check if lazyvim is already installed
+  ansible.builtin.stat:
+    path: "{{ original_user_home }}/.config/nvim"
+  register: lazyvim_path
+
+- name: Install lazyvim
+  ansible.builtin.git:
+    repo: https://github.com/LazyVim/starter
+    dest: "{{ original_user_home }}/.config/nvim"
+    update: false
+    depth: 1
+  when: not lazyvim_path.stat.exists
+
+- name: remove the .git directory from the lazyvim installation
+  ansible.builtin.file:
+    path: "{{ original_user_home }}/.config/nvim/.git"
+    state: absent
